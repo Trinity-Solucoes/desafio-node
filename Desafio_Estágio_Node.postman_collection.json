@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "de2891ae-cca3-47b2-a846-8124247fc3bb",
+		"name": "Desafio Estágio Java",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Criar novo cliente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"Nome do Cliente\",\n\t\"cpf\": \"11111111111\",\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua Atalaia\",\n\t\t\"numero\": \"200\",\n\t\t\"complemento\": \"\",\n\t\t\"bairro\": \"Pina\",\n\t\t\"cidade\": \"Recife\",\n\t\t\"uf\": \"PE\",\n\t\t\"cep\": \"51030-520\"\n\t},\n\t\"dataNascimento\": \"21/06/1985\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/prova/api/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prova",
+						"api",
+						"clientes"
+					]
+				},
+				"description": "Cria um novo Cliente.\n\n-> Response: \nCode: 200"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar cliente",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n\t\"nome\": \"Nome do Cliente\",\n\t\"cpf\": \"11111111111\",\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua Atalaia\",\n\t\t\"numero\": \"200\",\n\t\t\"complemento\": \"\",\n\t\t\"bairro\": \"Pina\",\n\t\t\"cidade\": \"Recife\",\n\t\t\"uf\": \"PE\",\n\t\t\"cep\": \"51030-520\"\n\t},\n\t\"dataNascimento\": \"21/06/1985\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/prova/api/clientes/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prova",
+						"api",
+						"clientes",
+						"{id}"
+					]
+				},
+				"description": "Atualiza o cliente pelo ID.\n\n**{id}** informado na URL\n\n-> Response 1 (Cliente atualizado): \nCode: 200\n\n\n-> Response 2 (Cliente não encontrado): \nCode: 404\nBody: \"Cliente não encontrado\""
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar cliente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/prova/api/clientes/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prova",
+						"api",
+						"clientes",
+						"{id}"
+					]
+				},
+				"description": "Consulta um cliente pelo ID\n\n**{id}** informado na URL\n\n-> Response 1: (Cliente encontrado)\nCode: 200\n```json\n{\n\t\"id\": 1,\n\t\"nome\": \"Nome do Cliente\",\n\t\"cpf\": \"11111111111\",\n\t\"endereco\": {\n\t\t\"logradouro\": \"Rua Atalaia\",\n\t\t\"numero\": \"200\",\n\t\t\"complemento\": \"\",\n\t\t\"bairro\": \"Pina\",\n\t\t\"cidade\": \"Recife\",\n\t\t\"uf\": \"PE\",\n\t\t\"cep\": \"51030-520\"\n\t},\n\t\"dataNascimento\": \"21/06/1985\",\n\t\"dependentes\": []\n}\n```\n\n-> Response 2 (Cliente não encontrado): \nCode: 404\nBody: \"Cliente não encontrado\""
+			},
+			"response": []
+		},
+		{
+			"name": "Listar clientes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/prova/api/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prova",
+						"api",
+						"clientes"
+					]
+				},
+				"description": "Lista os clientes cadastrados\n\n-> Response 1: (Array dos clientes encontrados)\nCode: 200\n```json\n[\n\t{\n\t\t\"id\": 1,\n\t\t\"nome\": \"Nome do Cliente\",\n\t\t\"cpf\": \"11111111111\",\n\t\t\"endereco\": {\n\t\t\t\"logradouro\": \"Rua Atalaia\",\n\t\t\t\"numero\": \"200\",\n\t\t\t\"complemento\": \"\",\n\t\t\t\"bairro\": \"Pina\",\n\t\t\t\"cidade\": \"Recife\",\n\t\t\t\"uf\": \"PE\",\n\t\t\t\"cep\": \"51030-520\"\n\t\t},\n\t\t\"dataNascimento\": \"21/06/1985\"\n\t}\n]\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar cliente",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/prova/api/clientes/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prova",
+						"api",
+						"clientes",
+						"{id}"
+					]
+				},
+				"description": "Remove o cliente pelo ID.\n\n**{id}** informado na URL\n\n-> Response 1 (Cliente removido): \nCode: 200\n\n\n-> Response 2 (Cliente não encontrado): \nCode: 404\nBody: \"Cliente não encontrado\""
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
