@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('Customers', {
+    return queryInterface.createTable('customers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,7 +15,7 @@ module.exports = {
       },
       dataNascimento: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
       },
       cpf: {
         allowNull: false,
@@ -30,7 +30,7 @@ module.exports = {
         type: DataTypes.DATE,
       }
     }).then(function(){
-      queryInterface.createTable('Enderecos', {
+      queryInterface.createTable('enderecos', {
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -39,7 +39,7 @@ module.exports = {
         },
         customerId: {
           type: DataTypes.INTEGER,
-          references: { model: 'Customers', key: 'id' }
+          references: { model: 'customers', key: 'id' }
         },
         logradouro: {
           allowNull: false,
@@ -82,6 +82,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('Enderecos').then(function(){queryInterface.dropTable('Customers')});
+    return queryInterface.dropTable('enderecos').then(function(){queryInterface.dropTable('customers')});
   }
 };

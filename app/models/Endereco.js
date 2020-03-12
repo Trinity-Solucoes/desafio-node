@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Endereco = sequelize.define('Endereco', {
+    const endereco = sequelize.define('endereco', {
       customerId: DataTypes.INTEGER,
       logradouro: DataTypes.STRING,
       numero: DataTypes.STRING,
@@ -10,5 +10,5 @@ module.exports = (sequelize, DataTypes) => {
       cep: DataTypes.STRING
     });
     
-    return Endereco;
+    return endereco;
   }

@@ -1,53 +1,51 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models');
 var Sequelize = require('sequelize');
-const { Customer, Endereco, sequelize } = require('../models');
+const { customer, endereco, sequelize } = require('../models');
 
 //create
 router.post('/clientes', (req, res) => {
-    const customer = req.body;
-    Customer.create({ 
-        nome: customer.nome, 
-        cpf: customer.cpf, 
-        dataNascimento: customer.dataNascimento}).then(function(customerAdicionado){
-        Endereco.create({
+    const customerBody = req.body;
+    customer.create({ 
+        nome: customerBody.nome, 
+        cpf: customerBody.cpf, 
+        dataNascimento: customerBody.dataNascimento}).then(function(customerAdicionado){
+        endereco.create({
             customerId:customerAdicionado.dataValues.id, 
-            logradouro: customer.endereco.logradouro, 
-            numero: customer.endereco.numero, 
-            complemento: customer.endereco.complemento, 
-            bairro: customer.endereco.bairro, 
-            cidade: customer.endereco.cidade, 
-            uf: customer.endereco.uf, 
-            cep:customer.endereco.cep})
+            logradouro: customerBody.endereco.logradouro, 
+            numero: customerBody.endereco.numero, 
+            complemento: customerBody.endereco.complemento, 
+            bairro: customerBody.endereco.bairro, 
+            cidade: customerBody.endereco.cidade, 
+            uf: customerBody.endereco.uf, 
+            cep:customerBody.endereco.cep})
     });
     res.send('Cliente criado com sucesso');
 });
 
 //update
 router.put('/clientes/:id', (req, res) => {
-    const customer = req.body;
+    const customerBody = req.body;
     var customerId = req.params.id;
-    var customers = [];
 
-    Customer.findOne({ where: {id: customerId} })
+    customer.findOne({ where: {id: customerId} })
     .then(function(c) {
         if(c){
             return c.update({
-                nome: customer.nome, 
-                cpf: customer.cpf, 
-                dataNascimento: customer.dataNascimento})
+                nome: customerBody.nome, 
+                cpf: customerBody.cpf, 
+                dataNascimento: customerBody.dataNascimento})
                 .then(function(customerAtualizado){
-                    Endereco.findOne({ where: {customerId: customerId} })
+                    endereco.findOne({ where: {customerId: customerId} })
                     .then(function(e){
                         e.update({
-                            logradouro: customer.endereco.logradouro, 
-                            numero: customer.endereco.numero, 
-                            complemento: customer.endereco.complemento, 
-                            bairro: customer.endereco.bairro, 
-                            cidade: customer.endereco.cidade, 
-                            uf: customer.endereco.uf, 
-                            cep:customer.endereco.cep})
+                            logradouro: customerBody.endereco.logradouro, 
+                            numero: customerBody.endereco.numero, 
+                            complemento: customerBody.endereco.complemento, 
+                            bairro: customerBody.endereco.bairro, 
+                            cidade: customerBody.endereco.cidade, 
+                            uf: customerBody.endereco.uf, 
+                            cep:customerBody.endereco.cep})
                     });
             res.send('Cliente atualizado');
             });  
@@ -58,7 +56,6 @@ router.put('/clientes/:id', (req, res) => {
         }
     });
 });
-
 
 //consultar
 router.get('/clientes/:id', (req, res) => {
@@ -123,11 +120,11 @@ router.get('/clientes/', (req, res) => {
 router.delete('/clientes/:id', (req, res) => {
     var idParam = req.params.id;
 
-    Customer.findOne({where: {id: idParam}}).then(function(clienteBuscado){
+    customer.findOne({where: {id: idParam}}).then(function(clienteBuscado){
         console.log('clienteBuscado: ' + clienteBuscado);
         if(clienteBuscado != null){
-            Endereco.destroy({where: {customerId: idParam}})
-            Customer.destroy({where: {id: idParam}});
+            endereco.destroy({where: {customerId: idParam}})
+            customer.destroy({where: {id: idParam}});
             res.send(`Cliente removido`);
         }else{
             res.status(404).send('Cliente não encontrado');

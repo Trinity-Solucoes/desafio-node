@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-  const Customer = sequelize.define('Customer', {
+  const customer = sequelize.define('customer', {
     nome: DataTypes.STRING,
     cpf: DataTypes.STRING,
-    dataNascimento: DataTypes.DATE
+    dataNascimento: DataTypes.STRING
   });
-  Customer.associate = function(models) {
-    Customer.hasOne(models.Endereco, {
+  customer.associate = function(models) {
+    customer.hasOne(models.endereco, {
       foreignKey: 'customerId',
       as: 'customer',
       onDelete: 'cascade' 
     });
   };
-  return Customer;
+  return customer;
 }
