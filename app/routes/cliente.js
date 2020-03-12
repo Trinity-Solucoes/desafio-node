@@ -4,7 +4,6 @@ const db = require('../models');
 var Sequelize = require('sequelize');
 const { Customer, Endereco, sequelize } = require('../models');
 
-
 //create
 router.post('/clientes', (req, res) => {
     const customer = req.body;
@@ -50,10 +49,13 @@ router.put('/clientes/:id', (req, res) => {
                             uf: customer.endereco.uf, 
                             cep:customer.endereco.cep})
                     });
-            res.send('Cliente atualizado com sucesso');
-            
+            res.send('Cliente atualizado');
             });  
-        };
+        }
+        else
+        {
+            res.status(404).send('Cliente não encontrado');
+        }
     });
 });
 
@@ -82,7 +84,11 @@ router.get('/clientes/:id', (req, res) => {
             customer['endereco'] = endereco;
             customers.push(customer);
         })
-        res.send(JSON.stringify(customers, null, 4))
+        if(customers.length > 0){
+            res.send(JSON.stringify(customers, null, 4))
+        }else{
+            res.status(404).send('Cliente não encontrado');
+        }
     });
 });
 
@@ -116,9 +122,17 @@ router.get('/clientes/', (req, res) => {
 //deletar
 router.delete('/clientes/:id', (req, res) => {
     var idParam = req.params.id;
-    Endereco.destroy({where: {customerId: idParam}})
-    Customer.destroy({where: {id: idParam}});
-    res.send(`Cliente removido`);
+
+    Customer.findOne({where: {id: idParam}}).then(function(clienteBuscado){
+        console.log('clienteBuscado: ' + clienteBuscado);
+        if(clienteBuscado != null){
+            Endereco.destroy({where: {customerId: idParam}})
+            Customer.destroy({where: {id: idParam}});
+            res.send(`Cliente removido`);
+        }else{
+            res.status(404).send('Cliente não encontrado');
+        }
+    });
 });
 
 module.exports = router;
